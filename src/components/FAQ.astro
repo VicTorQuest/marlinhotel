@@ -1,0 +1,19 @@
+---
+import { Plus, Minus, ArrowRight } from '@lucide/astro';
+import { faqs, site } from '../data/site';
+---
+<section class="section faq-section" id="faq">
+  <div class="shell faq-layout">
+    <div class="faq-intro" data-reveal><span class="eyebrow">FREQUENTLY ASKED QUESTIONS</span><h2 class="display-heading">A few things<br/>to know before<br/>you arrive.</h2><p class="body-copy">The details guests ask about most often, with clear guidance on what still needs confirmation.</p><a class="button button--white" href={`tel:${site.phoneE164}`}>Need help? Call reception <ArrowRight size={16}/></a></div>
+    <div class="faq-list" data-accordion>
+      {faqs.map((item, i) => (
+        <div class:list={['faq-item', { 'is-open': i === 0 }]} data-reveal>
+          <h3><button type="button" aria-expanded={i === 0 ? 'true' : 'false'} aria-controls={`faq-panel-${i}`} id={`faq-button-${i}`} data-faq-button><span>{item.question}</span><Plus class="faq-plus" size={19}/><Minus class="faq-minus" size={19}/></button></h3>
+          <div class="faq-item__panel" id={`faq-panel-${i}`} role="region" aria-labelledby={`faq-button-${i}`} inert={i !== 0}>
+            <div class="faq-item__panel-inner"><p>{item.answer}</p></div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

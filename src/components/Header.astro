@@ -1,0 +1,493 @@
+
+---
+import { ArrowRight, Phone, Menu, X } from '@lucide/astro';
+import { site } from '../data/site';
+
+const nav = [
+  { title: 'Location', href: '#location' },
+  { title: 'Rooms', href: '#rooms' },
+  { title: 'Amenities', href: '#amenities' },
+  { title: 'Reviews', href: '#reviews' },
+  { title: 'Explore', href: '#explore' },
+  { title: 'FAQ', href: '#faq' },
+  { title: 'Contact', href: '#contact' },
+];
+---
+
+<header class="site-header" id="site-header">
+  <div class="nav-wrap shell">
+    <div class="nav-brand-group">
+      <a
+        class="brand"
+        href="#top"
+        aria-label="Marlin Hotel homepage"
+      >
+        <img
+          class="brand__image"
+          src="/branding/marlin-logo.svg"
+          alt="Marlin Hotel & Suite"
+          width="165"
+          height="60"
+          decoding="async"
+        />
+      </a>
+
+      <div class="language-picker" data-language-picker>
+        <button
+          class="language-picker__trigger"
+          type="button"
+          aria-label="Select website language"
+          aria-haspopup="menu"
+          aria-expanded="false"
+          aria-controls="hotel-language-menu"
+          data-language-trigger
+        >
+          <span
+            data-language-current-icon
+            style="display: inline-flex; align-items: center; justify-content: center; width: 19px; height: 17px; flex-shrink: 0;"
+          >
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <path d="M2 12h20" />
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1 4-10Z" />
+            </svg>
+          </span>
+
+          <span data-language-current>ENG</span>
+
+          <svg
+            class="language-picker__chevron"
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.9"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="m6 9 6 6 6-6" />
+          </svg>
+        </button>
+
+        <div
+          class="language-picker__menu"
+          id="hotel-language-menu"
+          role="menu"
+          aria-label="Language options"
+          data-language-menu
+          inert
+        >
+          <!-- English -->
+          <button
+            type="button"
+            class="language-picker__option is-selected"
+            role="menuitemradio"
+            aria-label="English"
+            aria-checked="true"
+            data-language="ENG"
+          >
+            <span data-language-icon>
+              <svg
+                width="17"
+                height="17"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <circle cx="12" cy="12" r="10" />
+                <path d="M2 12h20" />
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10Z" />
+              </svg>
+            </span>
+            <span>ENG</span>
+          </button>
+
+          <!-- Igbo -->
+          <button
+            type="button"
+            class="language-picker__option"
+            role="menuitemradio"
+            aria-label="Igbo"
+            aria-checked="false"
+            data-language="IBO"
+          >
+            <span data-language-icon>
+              <img
+                src="/flags/ng.svg"
+                width="19"
+                height="13"
+                alt=""
+              />
+            </span>
+            <span>IBO</span>
+          </button>
+
+          <!-- Hausa -->
+          <button
+            type="button"
+            class="language-picker__option"
+            role="menuitemradio"
+            aria-label="Hausa"
+            aria-checked="false"
+            data-language="HAU"
+          >
+            <span data-language-icon>
+              <img
+                src="/flags/ng.svg"
+                width="19"
+                height="13"
+                alt=""
+              />
+            </span>
+            <span>HAU</span>
+          </button>
+
+          <!-- Yoruba -->
+          <button
+            type="button"
+            class="language-picker__option"
+            role="menuitemradio"
+            aria-label="Yoruba"
+            aria-checked="false"
+            data-language="YOR"
+          >
+            <span data-language-icon>
+              <img
+                src="/flags/ng.svg"
+                width="19"
+                height="13"
+                alt=""
+              />
+            </span>
+            <span>YOR</span>
+          </button>
+
+          <!-- Chinese -->
+          <button
+            type="button"
+            class="language-picker__option"
+            role="menuitemradio"
+            aria-label="Chinese"
+            aria-checked="false"
+            data-language="CHI"
+          >
+            <span data-language-icon>
+              <img
+                src="/flags/cn.svg"
+                width="19"
+                height="13"
+                alt=""
+              />
+            </span>
+            <span>CHI</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <nav class="desktop-nav" aria-label="Main navigation">
+      {nav.map((link) => (
+        <a href={link.href}>{link.title}</a>
+      ))}
+    </nav>
+
+    <div class="header-actions">
+      <a
+        class="button button--dark button--sm nav-call"
+        href={`tel:${site.phoneE164}`}
+        aria-label={`Call Marlin Hotel at ${site.phoneDisplay}`}
+      >
+        <Phone size={16} stroke-width={1.8} />
+        Call Us
+      </a>
+
+      <a
+        class="button button--dark button--sm nav-book"
+        href="#contact"
+      >
+        Book Your Stay
+        <ArrowRight size={16} stroke-width={1.8} />
+      </a>
+    </div>
+
+    <button
+      class="mobile-menu-toggle"
+      type="button"
+      aria-label="Open navigation"
+      aria-expanded="false"
+      aria-controls="mobile-nav"
+    >
+      <Menu class="menu-open-icon" size={24} />
+      <X class="menu-close-icon" size={24} />
+    </button>
+  </div>
+
+  <nav
+    class="mobile-nav"
+    id="mobile-nav"
+    aria-label="Mobile navigation"
+    aria-hidden="true"
+    inert
+  >
+    <div class="mobile-nav__links">
+      {nav.map((link) => (
+        <a href={link.href}>{link.title}</a>
+      ))}
+    </div>
+
+    <div class="mobile-nav__actions">
+      <a
+        class="button button--dark"
+        href={`tel:${site.phoneE164}`}
+      >
+        <Phone size={17} />
+        Call Reception
+      </a>
+
+      <a
+        class="button button--white"
+        href={site.directions}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Get Directions
+        <ArrowRight size={17} />
+      </a>
+    </div>
+  </nav>
+</header>
+
+<script>
+  const picker = document.querySelector<HTMLElement>(
+    '[data-language-picker]'
+  );
+
+  const trigger = picker?.querySelector<HTMLButtonElement>(
+    '[data-language-trigger]'
+  );
+
+  const menu = picker?.querySelector<HTMLElement>(
+    '[data-language-menu]'
+  );
+
+  const current = picker?.querySelector<HTMLElement>(
+    '[data-language-current]'
+  );
+
+  const currentIcon = picker?.querySelector<HTMLElement>(
+    '[data-language-current-icon]'
+  );
+
+  const options = Array.from(
+    picker?.querySelectorAll<HTMLButtonElement>(
+      '[data-language]'
+    ) ?? []
+  );
+
+  if (
+    picker &&
+    trigger &&
+    menu &&
+    current &&
+    currentIcon &&
+    options.length
+  ) {
+    const codes = new Set([
+      'ENG',
+      'IBO',
+      'HAU',
+      'YOR',
+      'CHI',
+    ]);
+
+    let active = 'ENG';
+
+    const setOpen = (open: boolean) => {
+      picker.classList.toggle('is-open', open);
+      trigger.setAttribute('aria-expanded', String(open));
+      menu.inert = !open;
+    };
+
+    const setSelected = (code: string) => {
+      if (!codes.has(code)) return;
+
+      const selectedOption = options.find(
+        (option) => option.dataset.language === code
+      );
+
+      if (!selectedOption) return;
+
+      active = code;
+
+      // Update the selected language abbreviation.
+      current.textContent = code;
+
+      // Update the trigger globe/flag to match the language.
+      const selectedIcon = selectedOption.querySelector(
+        '[data-language-icon] > svg, [data-language-icon] > img'
+      );
+
+      if (selectedIcon) {
+        currentIcon.replaceChildren(
+          selectedIcon.cloneNode(true)
+        );
+      }
+
+      // Update selected option styling and accessibility.
+      options.forEach((option) => {
+        const selected = option.dataset.language === code;
+
+        option.classList.toggle(
+          'is-selected',
+          selected
+        );
+
+        option.setAttribute(
+          'aria-checked',
+          String(selected)
+        );
+      });
+    };
+
+    // Restore the visitor's previously selected language.
+    // Site content remains English until translations are added.
+    try {
+      const stored = localStorage.getItem(
+        'marlin-language-preference'
+      );
+
+      if (stored && codes.has(stored)) {
+        setSelected(stored);
+      }
+    } catch {
+      // Local storage may be unavailable.
+    }
+
+    // Open or close dropdown.
+    trigger.addEventListener('click', () => {
+      setOpen(!picker.classList.contains('is-open'));
+    });
+
+    // Keyboard access from trigger.
+    trigger.addEventListener('keydown', (event) => {
+      if (
+        event.key === 'ArrowDown' ||
+        event.key === 'ArrowUp'
+      ) {
+        event.preventDefault();
+
+        setOpen(true);
+
+        const selectedIndex = options.findIndex(
+          (option) => option.dataset.language === active
+        );
+
+        const target =
+          event.key === 'ArrowDown'
+            ? (selectedIndex >= 0 ? selectedIndex : 0)
+            : options.length - 1;
+
+        options[target]?.focus();
+      }
+    });
+
+    // Handle selection and keyboard navigation.
+    options.forEach((option, index) => {
+      option.addEventListener('click', () => {
+        const code = option.dataset.language;
+
+        if (!code) return;
+
+        // Updates abbreviation and flag together.
+        setSelected(code);
+
+        try {
+          localStorage.setItem(
+            'marlin-language-preference',
+            code
+          );
+        } catch {
+          // Local storage may be unavailable.
+        }
+
+        setOpen(false);
+        trigger.focus();
+      });
+
+      option.addEventListener('keydown', (event) => {
+        if (
+          event.key === 'ArrowDown' ||
+          event.key === 'ArrowUp'
+        ) {
+          event.preventDefault();
+
+          const delta =
+            event.key === 'ArrowDown' ? 1 : -1;
+
+          const nextIndex =
+            (index + delta + options.length) %
+            options.length;
+
+          options[nextIndex]?.focus();
+        } else if (
+          event.key === 'Home' ||
+          event.key === 'End'
+        ) {
+          event.preventDefault();
+
+          options[
+            event.key === 'Home'
+              ? 0
+              : options.length - 1
+          ]?.focus();
+        } else if (event.key === 'Escape') {
+          event.preventDefault();
+          setOpen(false);
+          trigger.focus();
+        }
+      });
+    });
+
+    // Close when clicking outside.
+    document.addEventListener('pointerdown', (event) => {
+      if (!picker.contains(event.target as Node)) {
+        setOpen(false);
+      }
+    });
+
+    // Close with Escape.
+    document.addEventListener('keydown', (event) => {
+      if (
+        event.key === 'Escape' &&
+        picker.classList.contains('is-open')
+      ) {
+        setOpen(false);
+        trigger.focus();
+      }
+    });
+
+    // Close language dropdown when opening mobile navigation.
+    document
+      .querySelector('.mobile-menu-toggle')
+      ?.addEventListener('click', () => {
+        setOpen(false);
+      });
+  }
+</script>
+

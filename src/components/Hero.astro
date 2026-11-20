@@ -1,0 +1,73 @@
+---
+import { ArrowDown, ArrowRight } from '@lucide/astro';
+import { getImage, Image } from 'astro:assets';
+import { photos } from '../data/site';
+
+const slides = [
+  { photo: photos.exterior, label: 'Exterior', headline: 'A comfortable place to rest and recharge.', description: "Explore Marlin's rooms and welcoming interiors, then contact reception to check availability and current rates for your visit." },
+  { photo: photos.guestRoomWide, label: 'Rooms', headline: 'Room to settle in and slow things down.', description: 'Browse room photographs, compare the spaces and ask reception which categories and prices are available for your dates.' },
+  { photo: photos.receptionWide, label: 'Interiors', headline: 'A warm welcome is only the beginning of your stay.', description: 'Explore the interiors, amenities and essential hotel information, with clear directions and a direct way to reach reception.' },
+];
+
+const slideImages = await Promise.all(slides.map(async ({ photo }, index) => {
+  const primary = index === 0;
+  const [wide, mobile] = await Promise.all([
+    getImage({
+      src: photo.src, format: 'webp', quality: 80, width: 1120,
+      widths: [900, 1120, 1440, photo.src.width], sizes: '(max-width: 900px) 960px, 100vw',
+      loading: primary ? 'eager' : 'lazy', fetchpriority: primary ? 'high' : 'low', decoding: 'async',
+    }),
+    getImage({
+      src: photo.mobile, format: 'webp', quality: 80, width: 480,
+      widths: [360, 480, 640, photo.mobile.width],
+    }),
+  ]);
+  return { wide, mobile };
+}));
+---
+<section class="hero" id="top" aria-label="Welcome to Marlin Hotel">
+  <div class="hero__frame" data-hero-frame>
+    <div class="hero__slides" aria-hidden="true">
+      {slideImages.map(({ wide, mobile }, i) => (
+        <picture>
+          <source media="(max-width: 480px)" type="image/webp" srcset={mobile.srcSet.attribute}
+            sizes="(max-width: 410px) 400px, 100vw" />
+          <img class:list={['hero__image', { 'is-active': i === 0, 'hero__image--room': i === 1 }]}
+            src={wide.src} srcset={wide.srcSet.attribute} {...wide.attributes} alt="" data-hero-image />
+        </picture>
+      ))}
+    </div>
+    <div class="hero__shade"></div>
+    <div class="hero__body">
+      <div class="hero__lead">
+        <div class="hero__copy">
+          <p class="eyebrow eyebrow--light" data-hero-animate>MARLIN HOTEL & SUITES · LAGOS</p>
+          <h1 data-hero-animate data-hero-heading>{slides[0].headline}</h1>
+          <p class="hero__description" data-hero-animate data-hero-description>{slides[0].description}</p>
+        </div>
+        <div class="hero__actions" data-hero-animate>
+          <a class="button button--dark" href="#rooms">View Rooms <ArrowRight size={17}/></a>
+          <a class="button button--white" href="#about">Discover Marlin <ArrowRight size={17}/></a>
+        </div>
+      </div>
+      <div class="hero__bottom">
+        <div class="hero__thumbnails" role="group" aria-label="Hero image gallery">
+          {slides.map((slide, i) => (
+            <button class:list={['hero__thumb', { 'is-active': i === 0 }]} type="button"
+              aria-label={`Show ${slide.label.toLowerCase()} image`} aria-pressed={i === 0 ? 'true' : 'false'}
+              data-hero-headline={slide.headline} data-hero-description={slide.description} data-hero-thumb={i}>
+              <Image src={slide.photo.src} alt="" width={160} format="webp" quality={80} loading="lazy" fetchpriority="low" />
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+  <a class="hero__scroll" href="#about"><ArrowDown size={15} stroke-width={1.7}/> Scroll to discover more</a>
+</section>
+
+<style>
+  @media (481px <= width <= 900px) {
+    .hero__image--room { object-position: 72% center; }
+  }
+</style>

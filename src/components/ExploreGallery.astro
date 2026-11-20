@@ -1,0 +1,169 @@
+---
+import { ArrowRight, Images, ChevronLeft, ChevronRight, X } from '@lucide/astro';
+import { Image, getImage } from 'astro:assets';
+import { photos, photoURL, photoSrcset, stockBreakfast } from '../data/site';
+
+const details = [
+  {
+    title: 'The guest rooms',
+    detail: 'A closer look at the rooms and their details.',
+    image: photos.guestRoomClassic,
+    className: 'explore-photo--one',
+  },
+  {
+    title: 'Thoughtful interiors',
+    detail: 'Spaces to settle in, pause and enjoy your stay.',
+    image: photos.loungeColor,
+    className: 'explore-photo--two',
+  },
+  {
+    title: 'A place to settle in',
+    detail: 'Spend time in the quieter corners of the hotel.',
+    image: photos.guestRoomGreen,
+    className: 'explore-photo--three',
+  },
+  {
+    title: 'Morning moments',
+    detail: 'See the moments that begin a day at Marlin.',
+    image: null,
+    className: 'explore-photo--four',
+  },
+];
+const exploreSizes = '(max-width: 620px) calc(50vw - 28px), (max-width: 780px) clamp(125px, 19vw, 185px), clamp(130px, 17vw, 240px)';
+
+const gallery = [
+  { image: photos.loungeColor, name: 'The hotel interiors' },
+  { image: photos.guestRoomClassic, name: 'A place to rest' },
+  { image: photos.guestRoomDetail, name: 'Room details' },
+  { image: photos.guestRoomGreen, name: 'A comfortable stay' },
+  { image: photos.gym, name: 'Inside the hotel' },
+  { image: photos.poolCourtyard, name: 'Hotel surroundings' },
+];
+const fullImages = await Promise.all(gallery.map(({ image }) => getImage({
+  src: image.src,
+  format: 'webp',
+  quality: 80,
+})));
+---
+
+<section class="section explore-section" id="explore">
+  <div class="shell explore-stage">
+    <div class="explore-heading" data-reveal>
+      <span class="eyebrow">EXPLORE THE HOTEL</span>
+      <h2 class="display-heading">Explore Marlin<br />Hotel &amp; Suites.</h2>
+      <p class="body-copy">
+        From the rooms to the spaces in between, find the details that make Marlin feel like a place to stay.
+      </p>
+      <a class="button button--white" href="#gallery">
+        View the Gallery <ArrowRight size={17} />
+      </a>
+    </div>
+
+    {details.map((item) => (
+      <div class={`explore-photo ${item.className}`} data-explore-item data-explore-reveal>
+        <button
+          type="button"
+          class="explore-photo__trigger"
+          aria-expanded="false"
+          aria-label={`More about ${item.title}`}
+        >
+          {item.image ? (
+            <Image
+              src={item.image.src}
+              alt={item.image.alt}
+              width={320}
+              widths={[160, 240, 320, 480, 720]}
+              sizes={exploreSizes}
+              format="webp"
+              quality={80}
+              loading="lazy"
+              decoding="async"
+            />
+          ) : (
+            <img
+              src={photoURL(stockBreakfast, 320)}
+              srcset={photoSrcset(stockBreakfast, [160, 240, 320, 480, 720])}
+              sizes={exploreSizes}
+              width="850"
+              height="900"
+              alt="A breakfast table with coffee and food"
+              loading="lazy"
+              decoding="async"
+            />
+          )}
+          <span class="explore-photo__title">{item.title}</span>
+        </button>
+        <div class="explore-photo__popover" aria-hidden="true">
+          <span>INSIDE MARLIN</span>
+          <h3>{item.title}</h3>
+          <p>{item.detail}</p>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<section class="gallery-section" id="gallery">
+  <div class="shell gallery-heading" data-reveal>
+    <div>
+      <span class="eyebrow"><Images size={15} /> PHOTO GALLERY</span>
+      <h2 class="display-heading">Take a look around.</h2>
+    </div>
+    <p class="body-copy">A closer look at the spaces and details that shape a stay.</p>
+  </div>
+
+  <div class="gallery-rail" data-gallery-rail>
+    {gallery.map((item, index) => (
+      <button
+        type="button"
+        class="gallery-tile"
+        data-gallery-reveal
+        data-gallery-item={index}
+        data-gallery-full={fullImages[index].src}
+        data-gallery-caption={item.name}
+        aria-label={`View ${item.name}`}
+      >
+        <Image
+          src={item.image.src}
+          alt={item.image.alt}
+          width={480}
+          widths={[320, 480, 700, 960]}
+          sizes="(max-width: 620px) 78vw, clamp(290px, 30vw, 475px)"
+          format="webp"
+          quality={80}
+          loading="lazy"
+          decoding="async"
+        />
+        <span><span>{item.name}</span><ArrowRight size={19} /></span>
+      </button>
+    ))}
+  </div>
+
+  <div class="shell gallery-bottom">
+    <span>MARLIN HOTEL &amp; SUITES</span>
+    <div class="gallery-rail__controls">
+      <button type="button" data-gallery-scroll="prev" aria-label="Scroll gallery left">
+        <ChevronLeft size={19} />
+      </button>
+      <button type="button" data-gallery-scroll="next" aria-label="Scroll gallery right">
+        <ChevronRight size={19} />
+      </button>
+    </div>
+  </div>
+
+  <dialog class="gallery-modal" id="gallery-modal" aria-label="Image viewer">
+    <button type="button" class="gallery-modal__close" data-modal-close aria-label="Close image viewer">
+      <X size={23} />
+    </button>
+    <button type="button" class="gallery-modal__arrow gallery-modal__arrow--left" data-modal-prev aria-label="Previous photo">
+      <ChevronLeft size={25} />
+    </button>
+    <figure>
+      <img id="gallery-modal-image" alt="Hotel image" />
+      <figcaption id="gallery-modal-caption"></figcaption>
+    </figure>
+    <button type="button" class="gallery-modal__arrow gallery-modal__arrow--right" data-modal-next aria-label="Next photo">
+      <ChevronRight size={25} />
+    </button>
+  </dialog>
+</section>

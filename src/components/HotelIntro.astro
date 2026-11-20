@@ -1,0 +1,102 @@
+---
+import { ArrowRight, Hotel, MapPin } from '@lucide/astro';
+import { Image } from 'astro:assets';
+import { site, photos, photoURL, photoSrcset, stockBreakfast } from '../data/site';
+const moments = [
+  { image: photos.guestRoomClassic, label: 'Restful rooms' },
+  { image: photos.guestRoomAmbient, label: 'Marlin suites' },
+  { image: photos.loungeColor, label: 'Hotel interiors' },
+  { image: photos.guestRoomDetail, label: 'Room details' },
+  { image: null, label: 'Morning moments' },
+];
+const momentSizes = '(max-width: 620px) 64px, (max-width: 780px) 70px, 75px';
+---
+<section class="section intro-section" id="about">
+  <div class="shell intro-grid">
+    <div class="intro-photo-column">
+      <div class="intro-photo-heading" data-reveal>
+        <span class="eyebrow"><Hotel size={16} stroke-width={1.8} /> THE HOTEL</span>
+        <h2 class="display-heading">About Marlin Hotel</h2>
+      </div>
+      <div class="intro-photo-stack" data-reveal>
+        <figure class="intro-photo-stack__main media-zoom">
+          <Image
+            src={photos.receptionPortrait.src}
+            alt={photos.receptionPortrait.alt}
+            width={760}
+            widths={[320, 480, 640, 760, 1000, 1200]}
+            sizes="(max-width: 620px) calc(100vw - 40px), (max-width: 780px) min(90.6vw, 590px), min(43vw, 640px)"
+            format="webp"
+            quality={80}
+            loading="lazy"
+            decoding="async"
+          />
+        </figure>
+        <div class="intro-photo-stack__tag"><span>MARLIN</span><span>HOTEL &amp; SUITES</span></div>
+      </div>
+    </div>
+    <div class="intro-heading" data-reveal>
+      <h3>A little room to relax. A lot to look forward to.</h3>
+      <p class="body-copy">Marlin Hotel & Suites brings together accommodation, welcoming spaces and the little moments that make a stay worth remembering.</p>
+      <p class="body-copy">Whether you're visiting for a short break or planning a few nights away, take a look around and find the stay that works for you.</p>
+      <a class="button button--white" href="#rooms">Explore the rooms <ArrowRight size={17}/></a>
+    </div>
+  </div>
+  <div class="intro-moments" data-reveal aria-label="A closer look at Marlin Hotel">
+    <div class="intro-moments__track">
+      {[0, 1].map((copy) => (
+        <div class="intro-moments__group" aria-hidden={copy === 1 ? 'true' : undefined}>
+          {moments.map((moment) => (
+            <div class="intro-moment">
+              {moment.image ? (
+                <Image
+                  src={moment.image.src}
+                  alt={copy === 0 ? moment.image.alt : ''}
+                  width={160}
+                  height={160}
+                  fit="cover"
+                  widths={[80, 160, 240]}
+                  sizes={momentSizes}
+                  format="webp"
+                  quality={80}
+                  loading="lazy"
+                  decoding="async"
+                />
+              ) : (
+                <img
+                  src={photoURL(stockBreakfast, 160)}
+                  srcset={photoSrcset(stockBreakfast, [80, 160, 240])}
+                  sizes={momentSizes}
+                  width="160"
+                  height="160"
+                  alt={copy === 0 ? 'A breakfast table with coffee and food' : ''}
+                  loading="lazy"
+                  decoding="async"
+                />
+              )}
+              <span>{moment.label}</span>
+            </div>
+          ))}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+<section class="section location-section" id="location">
+  <div class="shell location-layout">
+    <div class="location-info" data-reveal>
+      <span class="eyebrow"><MapPin size={14}/> LOCATION</span>
+      <h2 class="display-heading">Find us in<br/>Abule Ado.</h2>
+      <p class="body-copy">Marlin Hotel & Suites is listed in the Festac Town Phase 2 extension area of Lagos.</p>
+      <div class="address-block"><span class="address-block__label">HOTEL ADDRESS</span><address>{site.address}</address></div>
+      <div class="location-actions">
+        <a class="button button--white" href={site.directions} target="_blank" rel="noopener noreferrer">Get Directions <ArrowRight size={17}/></a>
+      </div>
+    </div>
+    <div class="location-map" data-reveal>
+      <div class="location-map__heading"><span>MARLIN HOTEL & SUITES</span><a href={site.maps} target="_blank" rel="noopener noreferrer">Open Google Maps <ArrowRight size={17}/></a></div>
+      <iframe title="Google Maps showing Marlin Hotel in Abule Ado" src={site.mapsEmbed} loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+      <div class="location-map__foot"><MapPin size={18}/><span>Festac Town Phase 2 Extension, Lagos</span></div>
+    </div>
+  </div>
+</section>

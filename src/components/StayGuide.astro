@@ -1,0 +1,306 @@
+---
+import {
+  ArrowRight,
+  Bath,
+  Ban,
+  Coffee,
+  Droplets,
+  GlassWater,
+  KeyRound,
+  LockKeyhole,
+  Snowflake,
+  Sparkles,
+  Star,
+  Tv,
+  Wifi,
+  Armchair,
+} from '@lucide/astro';
+import { Image } from 'astro:assets';
+import { site, photos, photoURL, photoSrcset, stockBreakfast } from '../data/site';
+
+const reviewPhotoSizes = '(max-width: 780px) 1px, 13vw';
+const reviewBackgroundSizes = '(max-width: 620px) calc(100vw - 32px), (max-width: 780px) calc(50vw - 22px), calc(25vw - 11px)';
+
+// Editorial presentation for the proposal. Management must verify each facility before launch.
+const essentials = [
+  {
+    icon: Wifi,
+    title: 'Wi-Fi',
+    description: 'Stay connected for work, entertainment, or sharing your travel plans. Reception can confirm current access details for your room.',
+  },
+  {
+    icon: Snowflake,
+    title: 'Air conditioning',
+    description: "Enjoy a more comfortable night\'s rest. Ask which room categories feature cooling and individual temperature controls.",
+  },
+  {
+    icon: Sparkles,
+    title: 'Daily housekeeping',
+    description: 'Find out how room cleaning, fresh linens, and extra towels are arranged throughout a longer visit.',
+  },
+  {
+    icon: Armchair,
+    title: 'Easy room access',
+    description: 'Check access to guest floors and discuss any mobility needs when selecting accommodation for your stay.',
+  },
+  {
+    icon: Coffee,
+    title: 'Tea and coffee',
+    description: 'Start the morning at your own pace. Ask about in-room hot drinks and refreshments available through the hotel.',
+  },
+  {
+    icon: Tv,
+    title: 'In-room television',
+    description: 'Unwind after a busy day. Confirm the entertainment options and television facilities included with your room.',
+  },
+  {
+    icon: KeyRound,
+    title: 'Room security',
+    description: 'Reception can explain room keys, guest access arrangements, and the steps taken to help protect your belongings.',
+  },
+  {
+    icon: Ban,
+    title: 'Smoking policy',
+    description: "Choose a room that suits your preferences by confirming the hotel\'s current smoking and non-smoking arrangements.",
+  },
+  {
+    icon: Droplets,
+    title: 'Hot showers',
+    description: 'Check hot-water availability and the shower facilities for the room type you plan to reserve.',
+  },
+  {
+    icon: Bath,
+    title: 'Private bathroom',
+    description: 'Review the bathroom layout, provided toiletries, and other essentials for a more comfortable visit.',
+  },
+  {
+    icon: GlassWater,
+    title: 'Drinking water',
+    description: 'Find out whether bottled or filtered drinking water is provided with your room or available at reception.',
+  },
+  {
+    icon: LockKeyhole,
+    title: 'Storage options',
+    description: 'If you arrive early or have valuables to store, confirm what luggage and secure-storage facilities are offered.',
+  },
+];
+
+// Temporary sample copy, not real reviews. Replace with verified guest quotations before launch.
+const feedback = [
+  {
+    quote: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vestibulum, sapien id aliquam facilisis, justo orci efficitur ante, vel viverra magna neque at enim.',
+    label: 'Lorem Ipsum',
+  },
+  {
+    quote: 'Praesent quis neque vitae ipsum aliquet luctus. Suspendisse vitae sem sit amet tortor elementum gravida. Proin luctus risus a justo dignissim, quis vestibulum sem mollis.',
+    label: 'Lorem Ipsum',
+  },
+  {
+    quote: 'Sed tincidunt, erat vitae pulvinar ornare, lectus mauris cursus massa, ut tempus libero erat in augue. Integer accumsan sapien sed fermentum consequat.',
+    label: 'Lorem Ipsum',
+  },
+  {
+    quote: 'Curabitur sit amet faucibus urna. Vivamus gravida velit quis libero finibus, sed auctor justo elementum. Integer placerat sem ac turpis tristique, vitae posuere nibh consequat.',
+    label: 'Lorem Ipsum',
+  },
+  {
+    quote: 'Mauris id aliquet massa. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; suspendisse non justo in ipsum varius suscipit.',
+    label: 'Lorem Ipsum',
+  },
+  {
+    quote: 'Aliquam commodo, neque a posuere blandit, dui turpis bibendum magna, et pulvinar mi risus id lacus. Donec maximus eu mauris sit amet vehicula.',
+    label: 'Lorem Ipsum',
+  },
+  {
+    quote: 'Integer pretium facilisis lacus, sed placerat neque dictum ut. Sed finibus, tortor in bibendum posuere, ante sem rhoncus massa, sit amet tristique nibh elit in magna.',
+    label: 'Lorem Ipsum',
+  },
+];
+---
+
+<section class="breakfast-section" aria-labelledby="breakfast-heading">
+  <img
+    class="breakfast-section__image"
+    src={photoURL(stockBreakfast, 1800)}
+    srcset={photoSrcset(stockBreakfast, [700, 1200, 1800, 2200])}
+    sizes="100vw"
+    width="1800"
+    height="1000"
+    alt="A breakfast table with coffee and morning food"
+    loading="lazy"
+    decoding="async"
+  />
+  <div class="shell breakfast-section__layout">
+    <div class="breakfast-card" data-reveal>
+      <span class="eyebrow">GOOD MORNING, MARLIN</span>
+      <h2 id="breakfast-heading">Breakfast is included with every stay.</h2>
+      <p>Make the most of your morning with time for breakfast before the day begins.</p>
+      <dl>
+        <div><dt>Breakfast hours</dt><dd>Ask reception</dd></div>
+        <div><dt>Included</dt><dd>With every stay</dd></div>
+      </dl>
+      <a class="button button--dark" href={`tel:${site.phoneE164}`}>
+        Ask About Breakfast <ArrowRight size={16} />
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="section amenities-section" id="amenities">
+  <div class="shell amenities-layout">
+    <div class="amenities-intro" data-reveal>
+      <span class="eyebrow">STAY ESSENTIALS</span>
+      <h2 class="display-heading">Hotel amenities for an easy stay.</h2>
+      <p class="body-copy">
+        Room comforts, practical conveniences, and thoughtful details all play a part. Explore the features that matter when planning your stay at Marlin Hotel &amp; Suites.
+      </p>
+      <a class="button button--white" href={`tel:${site.phoneE164}`}>
+        Speak to Reception <ArrowRight size={17} />
+      </a>
+    </div>
+    <div class="amenities-list">
+      {essentials.map((item) => {
+        const Icon = item.icon;
+        return (
+          <article class="amenity-item" data-reveal>
+            <span class="amenity-item__icon"><Icon size={22} stroke-width={1.6} /></span>
+            <h3>{item.title}</h3>
+            <p>{item.description}</p>
+          </article>
+        );
+      })}
+    </div>
+  </div>
+</section>
+
+<section class="reviews-section section" id="reviews">
+  <div class="shell reviews-heading" data-reveal>
+    <div>
+      <span class="eyebrow"><Star size={15} fill="currentColor" /> GUEST REVIEWS</span>
+      <h2 class="display-heading">What guests say<br />about their stay.</h2>
+      <p>Read guest experiences and find more feedback on Google.</p>
+    </div>
+    <a class="button button--white" href={site.googleReviews} target="_blank" rel="noopener noreferrer">
+      See more reviews on Google <ArrowRight size={17} />
+    </a>
+  </div>
+
+  <div class="reviews-editorial" data-reviews-row="left">
+    <article class="review-quote" aria-label="Sample review layout">
+      <div class="review-quote__top">
+        <span class="review-quote__stars" aria-hidden="true">★★★★★</span>
+        <span class="review-quote__mark" aria-hidden="true"><Star size={20} stroke-width={2} /></span>
+      </div>
+      <blockquote>“{feedback[0].quote}”</blockquote>
+      <div class="review-quote__person"><strong>{feedback[0].label}</strong><span>Guest feedback</span></div>
+    </article>
+
+    <figure class="reviews-editorial__photo reviews-editorial__photo--first">
+      <Image
+        src={photos.receptionPortrait.src}
+        alt={photos.receptionPortrait.alt}
+        width={400}
+        widths={[180, 280, 400, 560]}
+        sizes={reviewPhotoSizes}
+        format="webp"
+        quality={80}
+        loading="lazy"
+        decoding="async"
+      />
+    </figure>
+
+    <article class="review-quote" aria-label="Sample review layout">
+      <div class="review-quote__top">
+        <span class="review-quote__stars" aria-hidden="true">★★★★★</span>
+        <span class="review-quote__mark" aria-hidden="true"><Star size={20} stroke-width={2} /></span>
+      </div>
+      <blockquote>“{feedback[1].quote}”</blockquote>
+      <div class="review-quote__person"><strong>{feedback[1].label}</strong><span>Guest feedback</span></div>
+    </article>
+
+    <figure class="reviews-editorial__photo reviews-editorial__photo--second">
+      <Image
+        src={photos.guestRoomDetail.src}
+        alt={photos.guestRoomDetail.alt}
+        width={400}
+        widths={[180, 280, 400, 560]}
+        sizes={reviewPhotoSizes}
+        format="webp"
+        quality={80}
+        loading="lazy"
+        decoding="async"
+      />
+    </figure>
+
+    <article class="review-quote" aria-label="Sample review layout">
+      <div class="review-quote__top">
+        <span class="review-quote__stars" aria-hidden="true">★★★★★</span>
+        <span class="review-quote__mark" aria-hidden="true"><Star size={20} stroke-width={2} /></span>
+      </div>
+      <blockquote>“{feedback[2].quote}”</blockquote>
+      <div class="review-quote__person"><strong>{feedback[2].label}</strong><span>Guest feedback</span></div>
+    </article>
+  </div>
+
+  <div class="reviews-editorial reviews-editorial--second" data-reviews-row="right">
+    <article class="review-quote review-quote--image" aria-label="Sample review layout">
+      <Image
+        class="review-quote__background"
+        src={photos.guestRoomGreen.src}
+        alt=""
+        width={640}
+        widths={[320, 480, 640, 960]}
+        sizes={reviewBackgroundSizes}
+        format="webp"
+        quality={80}
+        loading="lazy"
+        decoding="async"
+      />
+      <div class="review-quote__top">
+        <span class="review-quote__stars" aria-hidden="true">★★★★★</span>
+        <span class="review-quote__mark" aria-hidden="true"><Star size={20} stroke-width={2} /></span>
+      </div>
+      <blockquote>“{feedback[3].quote}”</blockquote>
+      <div class="review-quote__person"><strong>{feedback[3].label}</strong><span>Guest feedback</span></div>
+    </article>
+
+    <article class="review-quote" aria-label="Sample review layout">
+      <div class="review-quote__top">
+        <span class="review-quote__stars" aria-hidden="true">★★★★★</span>
+        <span class="review-quote__mark" aria-hidden="true"><Star size={20} stroke-width={2} /></span>
+      </div>
+      <blockquote>“{feedback[4].quote}”</blockquote>
+      <div class="review-quote__person"><strong>{feedback[4].label}</strong><span>Guest feedback</span></div>
+    </article>
+
+    <article class="review-quote" aria-label="Sample review layout">
+      <div class="review-quote__top">
+        <span class="review-quote__stars" aria-hidden="true">★★★★★</span>
+        <span class="review-quote__mark" aria-hidden="true"><Star size={20} stroke-width={2} /></span>
+      </div>
+      <blockquote>“{feedback[5].quote}”</blockquote>
+      <div class="review-quote__person"><strong>{feedback[5].label}</strong><span>Guest feedback</span></div>
+    </article>
+
+    <article class="review-quote review-quote--image" aria-label="Sample review layout">
+      <Image
+        class="review-quote__background"
+        src={photos.loungeColor.src}
+        alt=""
+        width={640}
+        widths={[320, 480, 640, 960]}
+        sizes={reviewBackgroundSizes}
+        format="webp"
+        quality={80}
+        loading="lazy"
+        decoding="async"
+      />
+      <div class="review-quote__top">
+        <span class="review-quote__stars" aria-hidden="true">★★★★★</span>
+        <span class="review-quote__mark" aria-hidden="true"><Star size={20} stroke-width={2} /></span>
+      </div>
+      <blockquote>“{feedback[6].quote}”</blockquote>
+      <div class="review-quote__person"><strong>{feedback[6].label}</strong><span>Guest feedback</span></div>
+    </article>
+  </div>
+</section>

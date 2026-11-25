@@ -30,25 +30,13 @@ export const photos = {
   poolCourtyard: { src: poolCourtyard, alt: 'Marlin courtyard with an outdoor pool and wooden seating' },
 } as const;
 
-// Keep the existing stock images where the archive lacked a suitable match.
+// Existing non-room stock imagery is unchanged.
 const unsplash = 'https://images.unsplash.com/';
-const stockRoomA = `${unsplash}photo-1611892440504-42a792e24d32`;
-const stockRoomB = `${unsplash}photo-1590490360182-c33d57733427`;
-const stockRoomC = `${unsplash}photo-1631049307264-da0ec9d70304`;
-const stockRoomD = `${unsplash}photo-1582719508461-905c673771fd`;
 export const stockBreakfast = `${unsplash}photo-1533089860892-a7c6f0a88666`;
 export const photoURL = (base: string, width: number) =>
   `${base}?auto=format&fit=crop&w=${width}&q=80`;
 export const photoSrcset = (base: string, widths: number[]) =>
   widths.map((width) => `${photoURL(base, width)} ${width}w`).join(', ');
-
-// Proposed room presentation for design approval, NOT Marlin's verified inventory or prices.
-export const rooms = [
-  { id: 'classic', title: 'Classic Room', gallery: [photos.guestRoomClassic, photos.guestRoomClassicAngle, photos.guestRoomWide], description: 'A comfortable setting for a restful night, with space to slow down and settle in.', highlight: 'Restful interiors' },
-  { id: 'deluxe', title: 'Deluxe Room', gallery: [photos.guestRoomAmbient, photos.guestRoomDetail, photos.guestRoomGreen], description: 'Thoughtful details and a welcoming atmosphere for a stay that feels easy.', highlight: 'A little more room' },
-  { id: 'twin', title: 'Twin Room', gallery: [stockRoomC, stockRoomA, stockRoomD], description: 'A flexible choice for those travelling together, designed around a comfortable stay.', highlight: 'A shared stay' },
-  { id: 'family', title: 'Family Room', gallery: [stockRoomD, stockRoomC, stockRoomB], description: 'A relaxed place to come back to after a day out, with everyone in mind.', highlight: 'Room to unwind' },
-] as const;
 
 export const faqs = [
   {
@@ -61,7 +49,7 @@ export const faqs = [
   },
   {
     question: 'Can I book a room directly from this website?',
-    answer: 'For now, the site provides a direct telephone enquiry. Room availability and reservations must be confirmed by the hotel. An online enquiry feature can be added once the hotel approves its booking workflow.',
+    answer: 'Use the booking enquiry form to prepare your stay details, or call reception directly. A reservation is only confirmed when the hotel accepts your enquiry.',
   },
   {
     question: 'What facilities and room amenities are available?',

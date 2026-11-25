@@ -1,53 +1,16 @@
 ---
-import { ArrowRight, ChevronLeft, ChevronRight, BedDouble } from '@lucide/astro';
-import { Image } from 'astro:assets';
-import { rooms, photoURL, photoSrcset, site } from '../data/site';
-
-const narrowRoomSizes = '(max-width: 620px) calc(100vw - 40px), (max-width: 1024px) 44vw, 435px';
-const wideRoomSizes = '(max-width: 620px) calc(100vw - 40px), (max-width: 1480px) 45vw, 659px';
+import { ArrowRight, BedDouble } from '@lucide/astro';
+import { rooms } from '../data/rooms';
+import RoomCard from './RoomCard.astro';
 ---
 <section class="section rooms-section" id="rooms">
   <div class="shell">
     <div class="section-heading rooms-heading" data-reveal>
       <div><span class="eyebrow"><BedDouble size={15}/> ROOMS</span><h2 class="display-heading">Rooms made for<br/>easy stays.</h2></div>
-      <p class="body-copy">Discover a place to settle in, from a short overnight visit to a longer stay. Get in touch for today's room options and rates.</p>
+      <div class="rooms-heading__copy"><p class="body-copy">Discover a place to settle in, from a short overnight visit to a longer stay. Get in touch for today's room options and rates.</p><a class="button button--white" href="/rooms/">Explore all rooms <ArrowRight size={16}/></a></div>
     </div>
     <div class="room-grid">
-      {rooms.map((room, i) => (
-        <article class:list={['room-card', i === 0 || i === 3 ? 'room-card--large' : 'room-card--split']} data-reveal>
-          <div class="room-card__media" data-room-gallery>
-            {room.gallery.map((image, j) => {
-              const classes = ['room-card__image', { 'is-active': j === 0 }];
-
-              if (typeof image === 'string') {
-                return <img class:list={classes}
-                  src={photoURL(image, 960)} srcset={photoSrcset(image, [460, 700, 960, 1200])}
-                  sizes="(max-width: 780px) 100vw, 45vw" width="1000" height="780"
-                  alt="Sample guest room photograph" loading="lazy" decoding="async" aria-hidden={j !== 0} />;
-              }
-
-              return <Image class:list={classes} src={image.src} alt={image.alt}
-                width={640} widths={[320, 480, 640, 800, 1080, image.src.width]}
-                sizes={i === 0 ? wideRoomSizes : narrowRoomSizes} format="webp" quality={80}
-                loading="lazy" decoding="async" aria-hidden={j !== 0} />;
-            })}
-            <div class="room-card__controls">
-              <button type="button" data-room-prev aria-label={`Previous photo for ${room.title}`}><ChevronLeft size={19}/></button>
-              <span class="room-card__counter" data-room-count>01 / 03</span>
-              <button type="button" data-room-next aria-label={`Next photo for ${room.title}`}><ChevronRight size={19}/></button>
-            </div>
-          </div>
-          <div class="room-card__content">
-            <h3>{room.title}</h3>
-            <p class="room-card__highlight">{room.highlight}</p>
-            <p class="room-card__description">{room.description}</p>
-            <div class="room-card__foot">
-              <span><small>NIGHTLY RATE</small><strong>Enquire for rates</strong></span>
-              <a class="button button--dark button--sm" href={`tel:${site.phoneE164}`} aria-label={`Enquire about ${room.title}`}>Book Your Stay <ArrowRight size={16}/></a>
-            </div>
-          </div>
-        </article>
-      ))}
+      {rooms.map((room, index) => <RoomCard room={room} index={index} home />)}
     </div>
   </div>
 </section>

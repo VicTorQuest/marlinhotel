@@ -1,0 +1,49 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Footer from '../../components/Footer.astro';
+import RoomCard from '../../components/RoomCard.astro';
+import { Image } from 'astro:assets';
+import { ArrowRight, BedDouble } from '@lucide/astro';
+import { photos, site } from '../../data/site';
+import { rooms, roomFilter, bookingHref } from '../../data/rooms';
+const filters = [...new Set(rooms.map(roomFilter))];
+---
+<BaseLayout title={`Rooms & Stays | ${site.name}`} description="Explore real guest room photographs at Marlin Hotel & Suites in Abule Ado, Lagos. Enquire about nightly rates and availability for your stay." ogImage={photos.guestRoomWide.src.src}>
+  <main id="top" class="room-page">
+    <section class="room-page-hero shell" aria-labelledby="rooms-title">
+      <div class="room-page-hero__copy" data-reveal>
+        <a class="room-back" href="/">Home / <span>Rooms</span></a>
+        <span class="eyebrow"><BedDouble size={16}/> STAY AT MARLIN</span>
+        <h1 id="rooms-title" class="display-heading">Find your place<br/>to unwind.</h1>
+        <p class="body-copy">A night away, a weekend in Lagos or a little more time to yourself. Explore our guest room photographs and let reception help you find the right room for your stay.</p>
+        <a class="button button--dark" href="#room-catalogue">Explore rooms <ArrowRight size={17}/></a>
+      </div>
+      <div class="room-page-hero__photo" data-reveal>
+        <Image src={photos.guestRoomWide.src} alt={photos.guestRoomWide.alt} width={960} widths={[480, 720, 960, 1200, 1448]} sizes="(max-width: 780px) 100vw, 55vw" format="webp" quality={82} loading="eager" fetchpriority="high" />
+        <div class="room-page-hero__caption">MARLIN HOTEL &amp; SUITES <span>ABULE ADO · LAGOS</span></div>
+      </div>
+    </section>
+    <section class="room-catalogue section shell" id="room-catalogue" aria-labelledby="catalogue-title">
+      <div class="room-catalogue__heading" data-reveal>
+        <div><span class="eyebrow">THE ROOMS</span><h2 id="catalogue-title" class="display-heading">A closer look.</h2></div>
+        <p class="body-copy">Browse real room interiors. Photographic views are not a list of confirmed room categories; reception will confirm your room, rate and availability.</p>
+      </div>
+      <div class="room-filters" data-room-filters hidden role="group" aria-label="Filter room views">
+        <button type="button" data-filter-all aria-pressed="true">All rooms</button>
+        {filters.map((filter) => <button type="button" data-filter-value={filter} aria-pressed="false">{filter}</button>)}
+        <span class="room-filters__count" data-filter-count aria-live="polite">{rooms.length} views</span>
+      </div>
+      <div class="room-grid catalogue-grid" data-catalogue-grid>
+        {rooms.map((room) => <RoomCard room={room} />)}
+      </div>
+    </section>
+    <section class="shell room-enquiry-banner" data-reveal>
+      <div><span class="eyebrow">PLAN YOUR STAY</span><h2 class="display-heading">Have a date in mind?</h2><p>Tell us when you are coming. Reception will help with the room options and current rates.</p></div>
+      <a class="button button--white" href={bookingHref()}>Enquire about a stay <ArrowRight size={17}/></a>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
+<script>
+  import '../../scripts/room-catalogue';
+</script>

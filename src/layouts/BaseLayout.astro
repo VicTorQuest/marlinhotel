@@ -1,5 +1,7 @@
 ---
 import '../styles/global.css';
+import '../styles/rooms.css';
+import { absoluteSiteURL } from '../data/seo';
 import { site } from '../data/site';
 import Header from '../components/Header.astro';
 import { ArrowUp } from '@lucide/astro';
@@ -7,11 +9,17 @@ import { ArrowUp } from '@lucide/astro';
 interface Props {
   title?: string;
   description?: string;
+  ogImage?: string;
+  noindex?: boolean;
 }
 const {
   title = 'Marlin Hotel & Suites | Rooms & Stays in Lagos',
+  ogImage,
+  noindex = false,
   description = 'Discover Marlin Hotel & Suites. Explore rooms, the hotel, amenities and guest experiences, with directions and direct booking enquiries.',
 } = Astro.props;
+const canonical = absoluteSiteURL(Astro.url.pathname);
+const socialImage = ogImage ? absoluteSiteURL(ogImage) : undefined;
 ---
 <!doctype html>
 <html lang="en-NG">
@@ -20,6 +28,10 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#f6f4ed" />
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
+    {canonical && <link rel="canonical" href={canonical} />}
+    {canonical && <meta property="og:url" content={canonical} />}
+    {socialImage && <meta property="og:image" content={socialImage} />}
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -58,7 +70,7 @@ const {
     </div>
     <Header />
     <div id="smooth-wrapper"><div id="smooth-content"><slot /></div></div>
-    <a class="back-to-top" href="#top" aria-label="Back to top" data-back-to-top><ArrowUp size={20} stroke-width={1.8}/></a>
+    <a class="back-to-top" href={Astro.url.pathname.startsWith('/rooms/') || Astro.url.pathname === '/' ? '#top' : '#smooth-content'} aria-label="Back to top" data-back-to-top><ArrowUp size={20} stroke-width={1.8}/></a>
     <script>
       import '../scripts/site';
     </script>

@@ -1,0 +1,64 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Footer from '../../components/Footer.astro';
+import RoomCard from '../../components/RoomCard.astro';
+import RoomGallery from '../../components/RoomGallery.astro';
+import { ArrowLeft, ArrowRight, BedDouble, CalendarDays, Phone, Users, Check } from '@lucide/astro';
+import { site } from '../../data/site';
+import { rooms, roomName, hasVerifiedRate, rateLabel, bookingHref, type Room } from '../../data/rooms';
+import { absoluteSiteURL } from '../../data/seo';
+export function getStaticPaths() { return rooms.map((room) => ({ params: { slug: room.slug }, props: { room } })); }
+interface Props { room: Room }
+const { room } = Astro.props;
+const name = roomName(room);
+const related = rooms.filter((other) => other.id !== room.id).slice(0, 2);
+const canonical = absoluteSiteURL(Astro.url.pathname);
+const catalogueURL = absoluteSiteURL('/rooms/');
+const homeURL = absoluteSiteURL('/');
+const breadcrumb = canonical && catalogueURL && homeURL ? { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [
+  { '@type': 'ListItem', position: 1, name: 'Home', item: homeURL },
+  { '@type': 'ListItem', position: 2, name: 'Rooms', item: catalogueURL },
+  { '@type': 'ListItem', position: 3, name, item: canonical },
+] } : undefined;
+---
+<BaseLayout title={`${name} | ${site.name}`} description={`${room.description} Enquire with Marlin Hotel reception in Lagos for the current rate and availability.`} ogImage={room.gallery[0].src.src}>
+  {breadcrumb && <script type="application/ld+json" is:inline set:html={JSON.stringify(breadcrumb).replace(/</g, '\\u003c')} />}
+  <main class="room-page room-detail" id="top">
+    <section class="shell room-detail__intro">
+      <a class="room-back" href="/rooms/"><ArrowLeft size={16}/> All rooms</a>
+      <div class="room-detail__heading" data-reveal>
+        <div><span class="eyebrow"><BedDouble size={16}/> {room.verifiedCategory ? 'ROOM DETAILS' : 'GUEST ROOM VIEW'}</span><h1 class="display-heading">{name}.</h1></div>
+        <p class="body-copy">{room.highlight}</p>
+      </div>
+      <div class="room-detail__layout">
+        <div class="room-detail__main">
+          <RoomGallery room={room} detail sizes="(max-width: 780px) calc(100vw - 40px), 63vw" />
+          <div class="room-detail__description" data-reveal>
+            <span class="eyebrow">THE SPACE</span><h2>Take a look inside.</h2><p class="body-copy">{room.description}</p>
+            <div class="room-detail__facts">
+              <div><BedDouble size={22} stroke-width={1.6}/><div><strong>Bed configuration</strong><span>{room.verifiedBed || 'Confirm with reception'}</span></div></div>
+              <div><Users size={22} stroke-width={1.6}/><div><strong>Guest capacity</strong><span>{room.verifiedCapacity ? `Up to ${room.verifiedCapacity} guests` : 'Confirm with reception'}</span></div></div>
+              <div><CalendarDays size={22} stroke-width={1.6}/><div><strong>Check-in / check-out</strong><span>{room.verifiedCheckIn && room.verifiedCheckOut ? `${room.verifiedCheckIn} / ${room.verifiedCheckOut}` : 'Confirm arrival and departure times'}</span></div></div>
+            </div>
+            <h2>Room amenities</h2>
+            {room.verifiedAmenities?.length ? <ul class="room-amenities">{room.verifiedAmenities.map((item) => <li><Check size={17}/> {item}</li>)}</ul> : <p class="body-copy">Ask reception about the facilities, bed configuration and amenities you need before making a reservation.</p>}
+          </div>
+        </div>
+        <aside class="room-detail__booking" aria-label="Room booking enquiry">
+          <span class="eyebrow">YOUR STAY</span><h2>Make it yours.</h2>
+          <div class="room-detail__rate"><small>NIGHTLY RATE</small><strong>{rateLabel(room)}</strong>{hasVerifiedRate(room) && <span>per night</span>}</div>
+          {hasVerifiedRate(room) && room.rate?.conditions && <p>{room.rate.conditions}</p>}
+          <p>Reception confirms the current rate, room category and availability for your chosen dates.</p>
+          <a class="button button--dark" href={bookingHref(room)}>Book this room <ArrowRight size={17}/></a>
+          <a class="button button--white" href={`tel:${site.phoneE164}`}><Phone size={17}/> Call reception</a>
+          <p class="room-detail__note">An enquiry is not a confirmed reservation.</p>
+        </aside>
+      </div>
+    </section>
+    <section class="section shell related-rooms" aria-labelledby="related-title">
+      <div class="room-catalogue__heading" data-reveal><div><span class="eyebrow">MORE AT MARLIN</span><h2 id="related-title" class="display-heading">Keep exploring.</h2></div><a class="button button--white" href="/rooms/">View all rooms <ArrowRight size={16}/></a></div>
+      <div class="room-grid catalogue-grid">{related.map((other) => <RoomCard room={other} />)}</div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>

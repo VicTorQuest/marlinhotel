@@ -3,13 +3,15 @@ import { ArrowRight, Phone } from '@lucide/astro';
 import { Image } from 'astro:assets';
 import { site, photos } from '../data/site';
 
+const home = Astro.url.pathname === '/';
+const section = (hash: string) => home ? hash : `/${hash}`;
 const links = [
-  { label: 'Location', href: '#location' },
-  { label: 'Rooms', href: '#rooms' },
-  { label: 'Amenities', href: '#amenities' },
-  { label: 'Reviews', href: '#reviews' },
-  { label: 'Explore', href: '#explore' },
-  { label: 'FAQ', href: '#faq' },
+  { label: 'Location', href: section('#location') },
+  { label: 'Rooms', href: '/rooms/' },
+  { label: 'Amenities', href: section('#amenities') },
+  { label: 'Reviews', href: section('#reviews') },
+  { label: 'Explore', href: section('#explore') },
+  { label: 'FAQ', href: section('#faq') },
 ];
 ---
 
@@ -73,7 +75,7 @@ const links = [
 <footer class="site-footer">
   <div class="shell footer-main">
     <div class="footer-brand">
-      <a class="brand brand--footer" href="#top" aria-label="Marlin Hotel homepage">
+      <a class="brand brand--footer" href={home ? '#top' : '/'} aria-label="Marlin Hotel homepage">
         <img
           class="brand__image"
           src="/branding/marlin-logo-footer.svg"

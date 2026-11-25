@@ -100,6 +100,8 @@ startHeroAutoplay();
 document.querySelectorAll<HTMLElement>('[data-room-gallery]').forEach((gallery) => {
   const images = Array.from(gallery.querySelectorAll<HTMLImageElement>('.room-card__image'));
   const count = gallery.querySelector<HTMLElement>('[data-room-count]');
+  const thumbs = Array.from(gallery.querySelectorAll<HTMLButtonElement>('[data-room-thumb]'));
+  gallery.querySelectorAll<HTMLElement>('[data-room-controls]').forEach((control) => { control.hidden = false; });
   let active = 0;
   function show(index: number) {
     if (images.length === 0) return;
@@ -108,10 +110,18 @@ document.querySelectorAll<HTMLElement>('[data-room-gallery]').forEach((gallery) 
       image.classList.toggle('is-active', i === active);
       image.setAttribute('aria-hidden', String(i !== active));
     });
+    thumbs.forEach((thumb, i) => thumb.setAttribute('aria-pressed', String(i === active)));
     if (count) count.textContent = `${String(active + 1).padStart(2, '0')} / ${String(images.length).padStart(2, '0')}`;
   }
   gallery.querySelector('[data-room-prev]')?.addEventListener('click', () => show(active - 1));
   gallery.querySelector('[data-room-next]')?.addEventListener('click', () => show(active + 1));
+  thumbs.forEach((thumb, index) => thumb.addEventListener('click', () => show(index)));
+  gallery.addEventListener('keydown', (event) => {
+    if (!(event.target instanceof HTMLButtonElement) || !['ArrowLeft', 'ArrowRight'].includes(event.key) || images.length < 2) return;
+    event.preventDefault();
+    show(active + (event.key === 'ArrowRight' ? 1 : -1));
+    if (thumbs.includes(event.target)) thumbs[active]?.focus();
+  });
 });
 
 // An accessible, single-open FAQ accordion. Content remains in the document for SEO.
@@ -426,4 +436,11 @@ if (!reducedMotion.matches) {
   });
 
   window.addEventListener('load', () => ScrollTrigger.refresh(), { once: true });
+  document.addEventListener('marlin:layout-change', () => requestAnimationFrame(() => ScrollTrigger.refresh()));
+  if (window.location.hash) {
+    window.addEventListener('load', () => {
+      const target = document.getElementById(window.location.hash.slice(1));
+      if (target && smoother) smoother.scrollTo(Math.max(0, smoother.offset(target, 'top top') - (header?.offsetHeight ?? 76)), false);
+    }, { once: true });
+  }
 }

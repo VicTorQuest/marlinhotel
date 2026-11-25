@@ -5,11 +5,18 @@ import RoomCard from '../../components/RoomCard.astro';
 import RoomGallery from '../../components/RoomGallery.astro';
 import { ArrowLeft, ArrowRight, BedDouble, CalendarDays, Phone, Users, Check } from '@lucide/astro';
 import { site } from '../../data/site';
-import { rooms, roomName, hasVerifiedRate, rateLabel, bookingHref, type Room } from '../../data/rooms';
+import { rooms, roomName, hasVerifiedRate, rateLabel, bookingHref, legacyRoomSlugs, roomPhotoNote, type Room } from '../../data/rooms';
 import { absoluteSiteURL } from '../../data/seo';
-export function getStaticPaths() { return rooms.map((room) => ({ params: { slug: room.slug }, props: { room } })); }
-interface Props { room: Room }
+export function getStaticPaths() {
+  return [
+    ...rooms.map((room) => ({ params: { slug: room.slug }, props: { room } })),
+    ...legacyRoomSlugs.map((slug) => ({ params: { slug }, props: { room: null } })),
+  ];
+}
+interface Props { room: Room | null }
 const { room } = Astro.props;
+// Old photo-based URLs cannot be safely mapped to a specific room category.
+if (!room) return Astro.redirect('/rooms/', 301);
 const name = roomName(room);
 const related = rooms.filter((other) => other.id !== room.id).slice(0, 2);
 const canonical = absoluteSiteURL(Astro.url.pathname);
@@ -34,7 +41,7 @@ const breadcrumb = canonical && catalogueURL && homeURL ? { '@context': 'https:/
         <div class="room-detail__main">
           <RoomGallery room={room} detail sizes="(max-width: 780px) calc(100vw - 40px), 63vw" />
           <div class="room-detail__description" data-reveal>
-            <span class="eyebrow">THE SPACE</span><h2>Take a look inside.</h2><p class="body-copy">{room.description}</p>
+            <span class="eyebrow">THE SPACE</span><h2>Take a look inside.</h2><p class="body-copy">{room.description}</p><p class="body-copy">{roomPhotoNote}</p>
             <div class="room-detail__facts">
               <div><BedDouble size={22} stroke-width={1.6}/><div><strong>Bed configuration</strong><span>{room.verifiedBed || 'Confirm with reception'}</span></div></div>
               <div><Users size={22} stroke-width={1.6}/><div><strong>Guest capacity</strong><span>{room.verifiedCapacity ? `Up to ${room.verifiedCapacity} guests` : 'Confirm with reception'}</span></div></div>
@@ -48,7 +55,7 @@ const breadcrumb = canonical && catalogueURL && homeURL ? { '@context': 'https:/
           <span class="eyebrow">YOUR STAY</span><h2>Make it yours.</h2>
           <div class="room-detail__rate"><small>NIGHTLY RATE</small><strong>{rateLabel(room)}</strong>{hasVerifiedRate(room) && <span>per night</span>}</div>
           {hasVerifiedRate(room) && room.rate?.conditions && <p>{room.rate.conditions}</p>}
-          <p>Reception confirms the current rate, room category and availability for your chosen dates.</p>
+          <p>Reception confirms the rate and availability for your chosen dates.</p>
           <a class="button button--dark" href={bookingHref(room)}>Book this room <ArrowRight size={17}/></a>
           <a class="button button--white" href={`tel:${site.phoneE164}`}><Phone size={17}/> Call reception</a>
           <p class="room-detail__note">An enquiry is not a confirmed reservation.</p>

@@ -45,7 +45,7 @@ export const faqs = [
   },
   {
     question: 'How do I check the current price of a room?',
-    answer: 'Please call reception for the current nightly rate and what is included. Published room prices will appear on this website after the hotel verifies them.',
+    answer: 'View our Rooms page for published nightly rates, and contact reception to confirm availability and what is included in your stay.',
   },
   {
     question: 'Can I book a room directly from this website?',

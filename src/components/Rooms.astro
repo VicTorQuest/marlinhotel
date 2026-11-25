@@ -7,7 +7,7 @@ import RoomCard from './RoomCard.astro';
   <div class="shell">
     <div class="section-heading rooms-heading" data-reveal>
       <div><span class="eyebrow"><BedDouble size={15}/> ROOMS</span><h2 class="display-heading">Rooms made for<br/>easy stays.</h2></div>
-      <div class="rooms-heading__copy"><p class="body-copy">Discover a place to settle in, from a short overnight visit to a longer stay. Get in touch for today's room options and rates.</p><a class="button button--white" href="/rooms/">Explore all rooms <ArrowRight size={16}/></a></div>
+      <div class="rooms-heading__copy"><p class="body-copy">Discover a place to settle in, from a short overnight visit to a longer stay. Explore our four room categories and nightly rates, then contact reception to confirm availability.</p><a class="button button--white" href="/rooms/">Explore all rooms <ArrowRight size={16}/></a></div>
     </div>
     <div class="room-grid">
       {rooms.map((room, index) => <RoomCard room={room} index={index} home />)}

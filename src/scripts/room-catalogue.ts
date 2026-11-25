@@ -13,7 +13,7 @@ if (filters && grid) {
       card.hidden = filter !== undefined && card.dataset.roomFilter !== filter;
       if (!card.hidden) visible++;
     });
-    if (count) count.textContent = `${visible} ${visible === 1 ? 'view' : 'views'}`;
+    if (count) count.textContent = `${visible} ${visible === 1 ? 'room' : 'rooms'}`;
     // Notify ScrollTrigger and ScrollSmoother after the document height changes.
     document.dispatchEvent(new Event('marlin:layout-change'));
   }));

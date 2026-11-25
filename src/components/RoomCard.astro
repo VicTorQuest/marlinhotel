@@ -1,7 +1,7 @@
 ---
 import { ArrowRight } from '@lucide/astro';
 import RoomGallery from './RoomGallery.astro';
-import { bookingHref, hasVerifiedRate, rateLabel, roomFilter, roomHref, roomName, type Room } from '../data/rooms';
+import { bookingHref, rateLabel, roomFilter, roomHref, roomName, type Room } from '../data/rooms';
 interface Props { room: Room; index?: number; home?: boolean }
 const { room, index = 0, home = false } = Astro.props;
 const wide = !home || index % 4 === 0 || index % 4 === 3;
@@ -12,9 +12,9 @@ const wide = !home || index % 4 === 0 || index % 4 === 3;
     <h3><a href={roomHref(room)}>{roomName(room)}</a></h3>
     <p class="room-card__highlight">{room.highlight}</p>
     <p class="room-card__description">{room.description}</p>
-    {!home && <p class="catalogue-card__facts">{[room.verifiedBed, room.verifiedCapacity ? `Up to ${room.verifiedCapacity} guests` : undefined].filter(Boolean).join(' · ') || 'Room category and occupancy confirmed by reception.'}</p>}
+    {!home && <p class="catalogue-card__facts">{[room.verifiedBed, room.verifiedCapacity ? `Up to ${room.verifiedCapacity} guests` : undefined].filter(Boolean).join(' · ') || 'Guest capacity and bed configuration confirmed by reception.'}</p>}
     <div class="room-card__foot">
-      <span><small>NIGHTLY RATE</small><strong>{rateLabel(room)}</strong>{hasVerifiedRate(room) && <small>PER NIGHT</small>}</span>
+      <span><small>NIGHTLY RATE</small><strong>{rateLabel(room)}</strong></span>
       <div class="room-card__actions">
         <a class="room-card__details" href={roomHref(room)} aria-label={`View ${roomName(room)}`}>View room <ArrowRight size={15}/></a>
         <a class="button button--dark button--sm" href={bookingHref(room)} aria-label={`Enquire about ${roomName(room)}`}>Book Your Stay <ArrowRight size={16}/></a>

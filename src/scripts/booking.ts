@@ -67,7 +67,7 @@ if (form) {
     const selectedLabel = room.selectedOptions[0]?.dataset.label || 'Any suitable room';
     const lines = [
       'Hello Marlin Hotel & Suites, I would like to enquire about a stay.', '',
-      `Preferred room view: ${selectedLabel}`,
+      `Preferred room category: ${selectedLabel}`,
       `Check-in: ${displayDate(checkin.value)}`,
       `Check-out: ${displayDate(checkout.value)}`,
       `Nights: ${nights}`,
@@ -76,7 +76,7 @@ if (form) {
       `Phone: ${phone.value.trim()}`,
       ...(email.value.trim() ? [`Email: ${email.value.trim()}`] : []),
       ...(notes.value.trim() ? [`Special requests: ${notes.value.trim()}`] : []), '',
-      'Please confirm the room category, current rate and availability. Thank you.',
+      'Please confirm the current rate and availability for my preferred room. Thank you.',
     ];
     message.value = lines.join('\n');
     const recipient = form.dataset.whatsapp ?? '';

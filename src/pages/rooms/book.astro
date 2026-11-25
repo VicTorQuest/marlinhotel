@@ -4,7 +4,7 @@ import Footer from '../../components/Footer.astro';
 import { Image } from 'astro:assets';
 import { ArrowLeft, ArrowRight, Phone, MessageCircle } from '@lucide/astro';
 import { photos, site } from '../../data/site';
-import { rooms, roomName } from '../../data/rooms';
+import { rooms, roomName, rateLabel } from '../../data/rooms';
 // Use the public reception WhatsApp number already maintained in site.ts.
 const whatsappNumber = site.phoneE164.replace(/\D/g, '');
 ---
@@ -21,12 +21,12 @@ const whatsappNumber = site.phoneE164.replace(/\D/g, '');
       <section class="booking-panel" aria-labelledby="enquiry-title" data-reveal>
         <span class="eyebrow">BOOKING ENQUIRY</span><h2 id="enquiry-title">Tell us about your visit.</h2><p class="booking-panel__intro">Required fields are marked with an asterisk.</p>
         <form data-booking-form data-whatsapp={whatsappNumber} method="post" autocomplete="on">
-          <div class="booking-field"><label for="booking-room">Preferred room view</label><select name="room" id="booking-room"><option value="">Any suitable room</option>{rooms.map((room) => <option value={room.slug} data-label={roomName(room)} data-capacity={room.verifiedCapacity ?? ''}>{roomName(room)}</option>)}</select><small>Room categories are subject to reception confirmation.</small></div>
+          <div class="booking-field"><label for="booking-room">Preferred room category</label><select name="room" id="booking-room"><option value="">Any suitable room</option>{rooms.map((room) => <option value={room.slug} data-label={roomName(room)} data-capacity={room.verifiedCapacity ?? ''}>{roomName(room)} · {rateLabel(room)}/night</option>)}</select><small>Reception will confirm the room and availability for your dates.</small></div>
           <div class="booking-fields booking-fields--two">
             <div class="booking-field"><label for="booking-checkin">Check-in *</label><input type="date" name="checkin" id="booking-checkin" required /></div>
             <div class="booking-field"><label for="booking-checkout">Check-out *</label><input type="date" name="checkout" id="booking-checkout" required /></div>
           </div>
-          <div class="booking-field"><label for="booking-guests">Number of guests *</label><input type="number" name="guests" id="booking-guests" min="1" max="100" step="1" value="2" required inputmode="numeric" /><small data-guest-note>Reception will confirm suitable occupancy.</small></div>
+          <div class="booking-field"><label for="booking-guests">Number of guests *</label><input type="number" name="guests" id="booking-guests" min="1" max="100" step="1" value="1" required inputmode="numeric" /><small data-guest-note>Reception will confirm suitable occupancy.</small></div>
           <div class="booking-fields booking-fields--two">
             <div class="booking-field"><label for="booking-name">Full name *</label><input name="guestName" id="booking-name" type="text" autocomplete="name" maxlength="100" required placeholder="Your full name" /></div>
             <div class="booking-field"><label for="booking-phone">Phone number *</label><input name="phone" id="booking-phone" type="tel" autocomplete="tel" inputmode="tel" maxlength="30" required placeholder="+234 …" /><small>Include your country code where possible.</small></div>

@@ -3,14 +3,16 @@
 import { ArrowRight, Phone, Menu, X } from '@lucide/astro';
 import { site } from '../data/site';
 
+const home = Astro.url.pathname === '/';
+const section = (hash: string) => home ? hash : `/${hash}`;
 const nav = [
-  { title: 'Location', href: '#location' },
-  { title: 'Rooms', href: '#rooms' },
-  { title: 'Amenities', href: '#amenities' },
-  { title: 'Reviews', href: '#reviews' },
-  { title: 'Explore', href: '#explore' },
-  { title: 'FAQ', href: '#faq' },
-  { title: 'Contact', href: '#contact' },
+  { title: 'Location', href: section('#location') },
+  { title: 'Rooms', href: '/rooms/' },
+  { title: 'Amenities', href: section('#amenities') },
+  { title: 'Reviews', href: section('#reviews') },
+  { title: 'Explore', href: section('#explore') },
+  { title: 'FAQ', href: section('#faq') },
+  { title: 'Contact', href: section('#contact') },
 ];
 ---
 
@@ -19,7 +21,7 @@ const nav = [
     <div class="nav-brand-group">
       <a
         class="brand"
-        href="#top"
+        href="/"
         aria-label="Marlin Hotel homepage"
       >
         <img
@@ -203,7 +205,7 @@ const nav = [
 
     <nav class="desktop-nav" aria-label="Main navigation">
       {nav.map((link) => (
-        <a href={link.href}>{link.title}</a>
+        <a href={link.href} aria-current={link.href === '/rooms/' && Astro.url.pathname.startsWith('/rooms/') ? 'page' : undefined}>{link.title}</a>
       ))}
     </nav>
 
@@ -219,7 +221,7 @@ const nav = [
 
       <a
         class="button button--dark button--sm nav-book"
-        href="#contact"
+        href="/rooms/book/"
       >
         Book Your Stay
         <ArrowRight size={16} stroke-width={1.8} />
@@ -247,11 +249,12 @@ const nav = [
   >
     <div class="mobile-nav__links">
       {nav.map((link) => (
-        <a href={link.href}>{link.title}</a>
+        <a href={link.href} aria-current={link.href === '/rooms/' && Astro.url.pathname.startsWith('/rooms/') ? 'page' : undefined}>{link.title}</a>
       ))}
     </div>
 
     <div class="mobile-nav__actions">
+      <a class="button button--dark" href="/rooms/book/">Book Your Stay <ArrowRight size={17}/></a>
       <a
         class="button button--dark"
         href={`tel:${site.phoneE164}`}

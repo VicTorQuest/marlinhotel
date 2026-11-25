@@ -85,35 +85,42 @@ const essentials = [
   },
 ];
 
-// Temporary sample copy, not real reviews. Replace with verified guest quotations before launch.
+// Google reviews supplied by the hotel; retain original wording and ratings.
 const feedback = [
   {
-    quote: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vestibulum, sapien id aliquam facilisis, justo orci efficitur ante, vel viverra magna neque at enim.',
-    label: 'Lorem Ipsum',
+    quote: "I love being in this marlin hotel and suit is very weird and wonderful place",
+    label: "Nationwide",
+    rating: 5,
   },
   {
-    quote: 'Praesent quis neque vitae ipsum aliquet luctus. Suspendisse vitae sem sit amet tortor elementum gravida. Proin luctus risus a justo dignissim, quis vestibulum sem mollis.',
-    label: 'Lorem Ipsum',
+    quote: "Marlin Hotel is a very nice hotel with strong security for customer I enjoyed my staying there the last time I can't wait to go there again",
+    label: "CHEF EMMANUEL",
+    rating: 5,
   },
   {
-    quote: 'Sed tincidunt, erat vitae pulvinar ornare, lectus mauris cursus massa, ut tempus libero erat in augue. Integer accumsan sapien sed fermentum consequat.',
-    label: 'Lorem Ipsum',
+    quote: "Good...but I tried accessing the app to check more about them but I couldn't...but I've been hearing good things about the hotel...",
+    label: "Bright Hair ways",
+    rating: 4,
   },
   {
-    quote: 'Curabitur sit amet faucibus urna. Vivamus gravida velit quis libero finibus, sed auctor justo elementum. Integer placerat sem ac turpis tristique, vitae posuere nibh consequat.',
-    label: 'Lorem Ipsum',
+    quote: "It's top notch , environment cool and calm ..but location is inside and confusing when you try to use Google map",
+    label: "Olovo Obinna",
+    rating: 4,
   },
   {
-    quote: 'Mauris id aliquet massa. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; suspendisse non justo in ipsum varius suscipit.',
-    label: 'Lorem Ipsum',
+    quote: "Very good",
+    label: "Wisdom Electrical service services Nigeria",
+    rating: 5,
   },
   {
-    quote: 'Aliquam commodo, neque a posuere blandit, dui turpis bibendum magna, et pulvinar mi risus id lacus. Donec maximus eu mauris sit amet vehicula.',
-    label: 'Lorem Ipsum',
+    quote: "A good environment and service",
+    label: "Nnaemeka Ude",
+    rating: 5,
   },
   {
-    quote: 'Integer pretium facilisis lacus, sed placerat neque dictum ut. Sed finibus, tortor in bibendum posuere, ante sem rhoncus massa, sit amet tristique nibh elit in magna.',
-    label: 'Lorem Ipsum',
+    quote: "Very good service from marlin hotel and suit",
+    label: "Serah Lash",
+    rating: 5,
   },
 ];
 ---
@@ -186,13 +193,13 @@ const feedback = [
   </div>
 
   <div class="reviews-editorial" data-reviews-row="left">
-    <article class="review-quote" aria-label="Sample review layout">
+    <article class="review-quote" aria-label={`Google review by ${feedback[0].label}`}>
       <div class="review-quote__top">
-        <span class="review-quote__stars" aria-hidden="true">★★★★★</span>
+        <span class="review-quote__stars" role="img" aria-label={`${feedback[0].rating} out of 5 stars`}>{'★'.repeat(feedback[0].rating)}<span class="review-quote__star-empty" aria-hidden="true">{'☆'.repeat(5 - feedback[0].rating)}</span></span>
         <span class="review-quote__mark" aria-hidden="true"><Star size={20} stroke-width={2} /></span>
       </div>
       <blockquote>“{feedback[0].quote}”</blockquote>
-      <div class="review-quote__person"><strong>{feedback[0].label}</strong><span>Guest feedback</span></div>
+      <div class="review-quote__person"><strong>{feedback[0].label}</strong><span>Google review</span></div>
     </article>
 
     <figure class="reviews-editorial__photo reviews-editorial__photo--first">
@@ -209,13 +216,13 @@ const feedback = [
       />
     </figure>
 
-    <article class="review-quote" aria-label="Sample review layout">
+    <article class="review-quote" aria-label={`Google review by ${feedback[1].label}`}>
       <div class="review-quote__top">
-        <span class="review-quote__stars" aria-hidden="true">★★★★★</span>
+        <span class="review-quote__stars" role="img" aria-label={`${feedback[1].rating} out of 5 stars`}>{'★'.repeat(feedback[1].rating)}<span class="review-quote__star-empty" aria-hidden="true">{'☆'.repeat(5 - feedback[1].rating)}</span></span>
         <span class="review-quote__mark" aria-hidden="true"><Star size={20} stroke-width={2} /></span>
       </div>
       <blockquote>“{feedback[1].quote}”</blockquote>
-      <div class="review-quote__person"><strong>{feedback[1].label}</strong><span>Guest feedback</span></div>
+      <div class="review-quote__person"><strong>{feedback[1].label}</strong><span>Google review</span></div>
     </article>
 
     <figure class="reviews-editorial__photo reviews-editorial__photo--second">
@@ -232,18 +239,18 @@ const feedback = [
       />
     </figure>
 
-    <article class="review-quote" aria-label="Sample review layout">
+    <article class="review-quote" aria-label={`Google review by ${feedback[2].label}`}>
       <div class="review-quote__top">
-        <span class="review-quote__stars" aria-hidden="true">★★★★★</span>
+        <span class="review-quote__stars" role="img" aria-label={`${feedback[2].rating} out of 5 stars`}>{'★'.repeat(feedback[2].rating)}<span class="review-quote__star-empty" aria-hidden="true">{'☆'.repeat(5 - feedback[2].rating)}</span></span>
         <span class="review-quote__mark" aria-hidden="true"><Star size={20} stroke-width={2} /></span>
       </div>
       <blockquote>“{feedback[2].quote}”</blockquote>
-      <div class="review-quote__person"><strong>{feedback[2].label}</strong><span>Guest feedback</span></div>
+      <div class="review-quote__person"><strong>{feedback[2].label}</strong><span>Google review</span></div>
     </article>
   </div>
 
   <div class="reviews-editorial reviews-editorial--second" data-reviews-row="right">
-    <article class="review-quote review-quote--image" aria-label="Sample review layout">
+    <article class="review-quote review-quote--image" aria-label={`Google review by ${feedback[3].label}`}>
       <Image
         class="review-quote__background"
         src={photos.guestRoomGreen.src}
@@ -257,32 +264,32 @@ const feedback = [
         decoding="async"
       />
       <div class="review-quote__top">
-        <span class="review-quote__stars" aria-hidden="true">★★★★★</span>
+        <span class="review-quote__stars" role="img" aria-label={`${feedback[3].rating} out of 5 stars`}>{'★'.repeat(feedback[3].rating)}<span class="review-quote__star-empty" aria-hidden="true">{'☆'.repeat(5 - feedback[3].rating)}</span></span>
         <span class="review-quote__mark" aria-hidden="true"><Star size={20} stroke-width={2} /></span>
       </div>
       <blockquote>“{feedback[3].quote}”</blockquote>
-      <div class="review-quote__person"><strong>{feedback[3].label}</strong><span>Guest feedback</span></div>
+      <div class="review-quote__person"><strong>{feedback[3].label}</strong><span>Google review</span></div>
     </article>
 
-    <article class="review-quote" aria-label="Sample review layout">
+    <article class="review-quote" aria-label={`Google review by ${feedback[4].label}`}>
       <div class="review-quote__top">
-        <span class="review-quote__stars" aria-hidden="true">★★★★★</span>
+        <span class="review-quote__stars" role="img" aria-label={`${feedback[4].rating} out of 5 stars`}>{'★'.repeat(feedback[4].rating)}<span class="review-quote__star-empty" aria-hidden="true">{'☆'.repeat(5 - feedback[4].rating)}</span></span>
         <span class="review-quote__mark" aria-hidden="true"><Star size={20} stroke-width={2} /></span>
       </div>
       <blockquote>“{feedback[4].quote}”</blockquote>
-      <div class="review-quote__person"><strong>{feedback[4].label}</strong><span>Guest feedback</span></div>
+      <div class="review-quote__person"><strong>{feedback[4].label}</strong><span>Google review</span></div>
     </article>
 
-    <article class="review-quote" aria-label="Sample review layout">
+    <article class="review-quote" aria-label={`Google review by ${feedback[5].label}`}>
       <div class="review-quote__top">
-        <span class="review-quote__stars" aria-hidden="true">★★★★★</span>
+        <span class="review-quote__stars" role="img" aria-label={`${feedback[5].rating} out of 5 stars`}>{'★'.repeat(feedback[5].rating)}<span class="review-quote__star-empty" aria-hidden="true">{'☆'.repeat(5 - feedback[5].rating)}</span></span>
         <span class="review-quote__mark" aria-hidden="true"><Star size={20} stroke-width={2} /></span>
       </div>
       <blockquote>“{feedback[5].quote}”</blockquote>
-      <div class="review-quote__person"><strong>{feedback[5].label}</strong><span>Guest feedback</span></div>
+      <div class="review-quote__person"><strong>{feedback[5].label}</strong><span>Google review</span></div>
     </article>
 
-    <article class="review-quote review-quote--image" aria-label="Sample review layout">
+    <article class="review-quote review-quote--image" aria-label={`Google review by ${feedback[6].label}`}>
       <Image
         class="review-quote__background"
         src={photos.loungeColor.src}
@@ -296,11 +303,21 @@ const feedback = [
         decoding="async"
       />
       <div class="review-quote__top">
-        <span class="review-quote__stars" aria-hidden="true">★★★★★</span>
+        <span class="review-quote__stars" role="img" aria-label={`${feedback[6].rating} out of 5 stars`}>{'★'.repeat(feedback[6].rating)}<span class="review-quote__star-empty" aria-hidden="true">{'☆'.repeat(5 - feedback[6].rating)}</span></span>
         <span class="review-quote__mark" aria-hidden="true"><Star size={20} stroke-width={2} /></span>
       </div>
       <blockquote>“{feedback[6].quote}”</blockquote>
-      <div class="review-quote__person"><strong>{feedback[6].label}</strong><span>Guest feedback</span></div>
+      <div class="review-quote__person"><strong>{feedback[6].label}</strong><span>Google review</span></div>
     </article>
   </div>
+
 </section>
+
+<style>
+  .review-quote__star-empty {
+    opacity: .65;
+  }
+  .review-quote__person strong {
+    overflow-wrap: anywhere;
+  }
+</style>

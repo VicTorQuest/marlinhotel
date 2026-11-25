@@ -1,6 +1,7 @@
 /* Room system: shares the original Manrope, paper, ink, shell and button styles. */
 [data-room-card][hidden], [data-room-controls][hidden], [data-room-filters][hidden], [data-booking-preview][hidden] { display: none !important; }
 .room-gallery-stage { position: absolute; inset: 0; }
+.room-gallery__photo-label { position: absolute; top: 10px; left: 10px; z-index: 2; max-width: calc(100% - 20px); padding: 5px 8px; background: rgba(22,23,21,.8); color: #fff; font-size: .64rem; line-height: 1.4; pointer-events: none; }
 .room-card__actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 10px 14px; min-width: 0; }
 .room-card__details { display: inline-flex; align-items: center; gap: 5px; font-size: .76rem; font-weight: 800; color: #52644a; }
 .room-card__details:hover, .room-card__content h3 a:hover { color: #405537; }
@@ -134,11 +135,18 @@
   .booking-fields--two { grid-template-columns: 1fr; }
   .booking-field input, .booking-field textarea, .booking-field select { font-size: 16px; }
 }
-@media (max-width: 420px) {
+@media (max-width: 480px) {
   .room-card__foot, .room-card--split .room-card__foot { flex-direction: column; align-items: stretch; }
-  .room-card__actions, .room-card--split .room-card__actions { display: grid; grid-template-columns: minmax(0, 1fr); justify-items: start; gap: 12px; }
-  .room-card__actions .button { width: 100%; }
-  .room-enquiry-banner > .button, .booking-preview__actions > .button { width: 100%; }
+  .room-card__actions, .room-card--split .room-card__actions {
+    display: grid; grid-template-columns: minmax(0, 1fr); width: 100%; justify-items: stretch; gap: 10px;
+  }
+  .room-card__actions > .room-card__details { min-height: 44px; justify-content: center; text-align: center; }
+  .room-card__actions > .button { width: 100%; min-height: 44px; margin-top: 0; white-space: normal; }
+  .booking-preview__actions { display: grid; grid-template-columns: minmax(0, 1fr); width: 100%; }
+  .booking-preview__actions > .button { width: 100%; min-height: 44px; justify-content: center; }
+}
+@media (max-width: 420px) {
+  .room-enquiry-banner > .button { width: 100%; }
   .room-filters button { padding: 10px 13px; }
   .room-page-hero__copy .display-heading, .booking-intro h1 { font-size: clamp(2.3rem, 10.5vw, 3.1rem); }
 }

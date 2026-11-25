@@ -22,34 +22,44 @@ export interface Room {
   availability: 'reception-confirmation';
 }
 
-// These are photographic views, not four confirmed room types or units.
-// Retain stable slugs when management supplies the official category mapping.
+// Categories and nightly rates are taken from the hotel’s supplied rate card.
+// The photo-to-category mapping has not been confirmed. Galleries show general hotel room photography.
+export const roomPhotoNote = "Photos show Marlin’s guest rooms; the exact layout and décor for each category may vary. Confirm your room with reception.";
+export const legacyRoomSlugs = ['blue-accent-room', 'room-with-desk', 'green-accent-room', 'warm-lit-room'] as const;
 export const rooms: readonly Room[] = [
   {
-    id: 'classic', slug: 'blue-accent-room', title: 'Blue-accent room',
-    description: 'Blue cushions, a bed beside the window and circular ceiling lighting give this photographed interior its character.',
-    highlight: 'Blue accents · Window-side bed', style: 'Blue accents',
+    id: 'classic', slug: 'standard-room', title: 'Standard Room',
+    description: 'Choose a Standard Room for your next overnight stay in Lagos.',
+    highlight: 'Marlin Hotel & Suites · Lagos', style: 'Standard Room',
+    verifiedCategory: 'Standard Room',
+    rate: { amount: 35000, currency: 'NGN', verified: true },
     gallery: [photos.guestRoomClassic, photos.guestRoomClassicAngle],
     availability: 'reception-confirmation',
   },
   {
-    id: 'wide', slug: 'room-with-desk', title: 'Room with a desk',
-    description: 'Take a closer look at the blue bedding, seating, television and white desk in these room photographs.',
-    highlight: 'Blue bedding · Seating and desk', style: 'Blue accents',
+    id: 'wide', slug: 'suite', title: 'Suite',
+    description: 'Enquire about a Suite for your preferred dates at Marlin Hotel.',
+    highlight: 'Marlin Hotel & Suites · Lagos', style: 'Suite',
+    verifiedCategory: 'Suite',
+    rate: { amount: 40000, currency: 'NGN', verified: true },
     gallery: [photos.guestRoomWide, photos.guestRoomDetail],
     availability: 'reception-confirmation',
   },
   {
-    id: 'green', slug: 'green-accent-room', title: 'Green-accent room',
-    description: 'Green accent lighting and a patterned carpet are visible in this photographed guest room.',
-    highlight: 'Green lighting · Patterned carpet', style: 'Green accents',
+    id: 'green', slug: 'executive-suite', title: 'Executive Suite',
+    description: 'Plan your stay in an Executive Suite and confirm your room requirements with reception.',
+    highlight: 'Marlin Hotel & Suites · Lagos', style: 'Executive Suite',
+    verifiedCategory: 'Executive Suite',
+    rate: { amount: 50000, currency: 'NGN', verified: true },
     gallery: [photos.guestRoomGreen],
     availability: 'reception-confirmation',
   },
   {
-    id: 'ambient', slug: 'warm-lit-room', title: 'Warm-lit room',
-    description: 'Warm pendant lighting and a seating area give this guest room photograph a welcoming atmosphere.',
-    highlight: 'Warm lighting · Seating area', style: 'Warm lighting',
+    id: 'ambient', slug: 'presidential-suite', title: 'Presidential Suite',
+    description: 'Explore Marlin’s highest-priced room category and enquire about availability for your stay.',
+    highlight: 'Marlin Hotel & Suites · Lagos', style: 'Presidential Suite',
+    verifiedCategory: 'Presidential Suite',
+    rate: { amount: 60000, currency: 'NGN', verified: true },
     gallery: [photos.guestRoomAmbient],
     availability: 'reception-confirmation',
   },

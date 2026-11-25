@@ -1,13 +1,12 @@
 ---
 import { Image } from 'astro:assets';
 import { ChevronLeft, ChevronRight } from '@lucide/astro';
-import { roomName, type Room } from '../data/rooms';
+import type { Room } from '../data/rooms';
 interface Props { room: Room; detail?: boolean; sizes?: string }
 const { room, detail = false, sizes = '(max-width: 620px) calc(100vw - 40px), 45vw' } = Astro.props;
-const name = roomName(room);
 const pad = (n: number) => String(n).padStart(2, '0');
 ---
-<div class:list={[detail ? 'room-detail-gallery' : 'room-card__media']} data-room-gallery role="group" aria-label={`Photographs of ${name}`}>
+<div class:list={[detail ? 'room-detail-gallery' : 'room-card__media']} data-room-gallery role="group" aria-label="Marlin Hotel guest room photographs">
   <div class:list={[detail ? 'room-detail-gallery__stage' : 'room-gallery-stage']}>
     {room.gallery.map((image, j) => (
       <Image class:list={['room-card__image', { 'is-active': j === 0 }]}
@@ -16,10 +15,11 @@ const pad = (n: number) => String(n).padStart(2, '0');
         sizes={sizes} format="webp" quality={80} loading={detail && j === 0 ? 'eager' : 'lazy'}
         fetchpriority={detail && j === 0 ? 'high' : 'auto'} decoding="async" aria-hidden={j !== 0} />
     ))}
+    <span class="room-gallery__photo-label">Hotel photo · Category not confirmed</span>
     {room.gallery.length > 1 && <div class="room-card__controls" data-room-controls hidden>
-      <button type="button" data-room-prev aria-label={`Previous photo of ${name}`}><ChevronLeft size={19}/></button>
+      <button type="button" data-room-prev aria-label="Previous room photo"><ChevronLeft size={19}/></button>
       <span class="room-card__counter" data-room-count aria-live="polite">01 / {pad(room.gallery.length)}</span>
-      <button type="button" data-room-next aria-label={`Next photo of ${name}`}><ChevronRight size={19}/></button>
+      <button type="button" data-room-next aria-label="Next room photo"><ChevronRight size={19}/></button>
     </div>}
   </div>
   {detail && room.gallery.length > 1 && <div class="room-detail-gallery__thumbs" data-room-controls hidden aria-label="Choose a room photograph">

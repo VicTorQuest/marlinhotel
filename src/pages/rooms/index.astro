@@ -8,7 +8,7 @@ import { photos, site } from '../../data/site';
 import { rooms, roomFilter, bookingHref } from '../../data/rooms';
 const filters = [...new Set(rooms.map(roomFilter))];
 ---
-<BaseLayout title={`Rooms & Stays | ${site.name}`} description="Explore real guest room photographs at Marlin Hotel & Suites in Abule Ado, Lagos. Enquire about nightly rates and availability for your stay." ogImage={photos.guestRoomWide.src.src}>
+<BaseLayout title={`Rooms & Stays | ${site.name}`} description="Explore real guest room photographs at Marlin Hotel & Suites in Abule Ado, Lagos. Compare nightly rates from ₦35,000 and enquire about availability for your stay." ogImage={photos.guestRoomWide.src.src}>
   <main id="top" class="room-page">
     <section class="room-page-hero shell" aria-labelledby="rooms-title">
       <div class="room-page-hero__copy" data-reveal>
@@ -26,12 +26,12 @@ const filters = [...new Set(rooms.map(roomFilter))];
     <section class="room-catalogue section shell" id="room-catalogue" aria-labelledby="catalogue-title">
       <div class="room-catalogue__heading" data-reveal>
         <div><span class="eyebrow">THE ROOMS</span><h2 id="catalogue-title" class="display-heading">A closer look.</h2></div>
-        <p class="body-copy">Browse real room interiors. Photographic views are not a list of confirmed room categories; reception will confirm your room, rate and availability.</p>
+        <p class="body-copy">Compare our four room categories and published nightly rates. Reception will confirm the room and availability for your dates.</p>
       </div>
-      <div class="room-filters" data-room-filters hidden role="group" aria-label="Filter room views">
+      <div class="room-filters" data-room-filters hidden role="group" aria-label="Filter room categories">
         <button type="button" data-filter-all aria-pressed="true">All rooms</button>
         {filters.map((filter) => <button type="button" data-filter-value={filter} aria-pressed="false">{filter}</button>)}
-        <span class="room-filters__count" data-filter-count aria-live="polite">{rooms.length} views</span>
+        <span class="room-filters__count" data-filter-count aria-live="polite">{rooms.length} rooms</span>
       </div>
       <div class="room-grid catalogue-grid" data-catalogue-grid>
         {rooms.map((room) => <RoomCard room={room} />)}
